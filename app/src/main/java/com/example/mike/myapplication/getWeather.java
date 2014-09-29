@@ -10,13 +10,20 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.ListView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,49 +50,47 @@ public class getWeather extends AsyncTask<String, Void, String> {
         progressDialog.show();
     }
 
-    protected void getLongLatByName(String name) {
-       /* try {
-            URL url = new URL("http://geocode-maps.yandex.ru/1.x/?geocode=&format=json")
-        }*/
+    protected String getLongLatByName(String name) {
+        String json = null;
+        String coords = null;
+        try {
+            //Log.d("URL","http://geocode-maps.yandex.ru/1.x/?geocode=" + URLEncoder.encode(name, "utf-8") + "&format=json");
+            json = Connector.getByUrl("http://geocode-maps.yandex.ru/1.x/?geocode=" + URLEncoder.encode(name, "utf-8") + "&format=json");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        if (json != null) {
+            try {
+                JSONObject object = new JSONObject(json);
+                Log.d("OBJECT", object.toString());
+                JSONObject latlong = ((JSONObject)object.getJSONObject("response").getJSONObject("GeoObjectCollection").
+                        getJSONArray("featureMember").get(0)).getJSONObject("GeoObject").getJSONObject("Point");
+                coords = latlong.getString("pos");
+                //Log.d("POSITION", latlong.getString("pos"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return coords;
     }
 
     @Override
     protected String doInBackground(String... strings) {
         String city = strings[0];
-        Pair<String, String> coordinates = CityList.mCities.get(city);
+        //getLongLatByName(city);
+        //Pair<String, String> coordinates = CityList.mCities.get(city);
+        String coordinates = getLongLatByName(city);
         String answer = null;
-        if (coordinates != null){
-            try {
-                URL url = new URL("https://simple-weather.p.mashape.com/weatherdata?lat="+coordinates.second + "&lng=" + coordinates.first);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setRequestProperty("X-Mashape-Key", "4eDVJxGKn0mshsfKjopUw8qIneivp1OrtWCjsnITSKq0M5yGFJ");
-                connection.connect();
-                int code = connection.getResponseCode();
-                if (code == 200) {
-                    InputStream in = connection.getInputStream();
-
-                    answer = (new JsonReqParser(handleInputStream(in))).info();
-                }
-                connection.disconnect();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
+        if (coordinates != null) {
+            String[] coords = coordinates.split(" ");
+            String url = "https://simple-weather.p.mashape.com/weatherdata?lat="+ coords[1] + "&lng=" + coords[0];
+            Map<String, String> headers = new TreeMap<String, String>();
+            headers.put("X-Mashape-Key", "4eDVJxGKn0mshsfKjopUw8qIneivp1OrtWCjsnITSKq0M5yGFJ");
+            answer = (new JsonReqParser(Connector.getByUrl(url, headers))).info();
         }
-
         return answer;
     }
-    private String handleInputStream(InputStream in) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        String result = "", line = "";
-        while ((line = reader.readLine()) != null) {
-            result += line;
-        }
-        return result;
-    }
+
 
     @Override
     protected void onPostExecute(String result){
