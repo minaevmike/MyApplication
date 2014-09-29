@@ -42,6 +42,13 @@ public class getWeather extends AsyncTask<String, Void, String> {
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
+
+    protected void getLongLatByName(String name) {
+        try {
+            URL url = new URL("http://geocode-maps.yandex.ru/1.x/?geocode=&format=json")
+        }
+    }
+
     @Override
     protected String doInBackground(String... strings) {
         String city = strings[0];
@@ -58,6 +65,7 @@ public class getWeather extends AsyncTask<String, Void, String> {
                 if (code == 200) {
                     InputStream in = connection.getInputStream();
                     answer = handleInputStream(in);
+                    Log.i("Weather", answer);
                 }
                 connection.disconnect();
             } catch (MalformedURLException e) {
