@@ -4,17 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
 
 
 public class MyActivity extends FragmentActivity implements CityList.OnItemSelectedListener {
-    //ExecutorService executorService = Executors.newCachedThreadPool();
+    public static final String LOG_TAG = "WEATHER: ";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,33 +23,34 @@ public class MyActivity extends FragmentActivity implements CityList.OnItemSelec
     public void onArticleSelected(String city) {
         getWeather weather = new getWeather(this);
         weather.execute(city);
-        /*ListView list = (ListView) findViewById(R.id.list);
-        list.setVisibility(View.INVISIBLE);
-        ProgressBar bar = (ProgressBar) findViewById(R.id.progress_bar);
-        bar.setVisibility(View.VISIBLE);
-        FutureTask<City> task = new FutureTask<City>(new getWeather(city));
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.submit(task);
-        City city1 = null;
-        try{
-            city1 = task.get();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        executorService.shutdown();
-        //City city1 = City.getInstance(city);
-        list.setVisibility(View.VISIBLE);
-        bar.setVisibility(View.INVISIBLE);
-        if(city != null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.container, city1);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }
-        else{
-            Log.i("City callble", "NULL");
-        }*/
-        //DetailFragmet fragmet = DetailFragmet.
-        //DetailFragment newFragment = DetailFragment.getInstance(position);
+
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(LOG_TAG, "onSaveInstanceState");
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d(LOG_TAG, "onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d(LOG_TAG, "onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(LOG_TAG, "onDestroy");
+        super.onDestroy();
+    }
+    @Override
+    protected void onResume() {
+        Log.d(LOG_TAG, "onResume");
+        super.onResume();
     }
 }

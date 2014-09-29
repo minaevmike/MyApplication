@@ -13,21 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Mike on 29.09.2014.
  */
-/*public class getWeather implements Callable<City> {
-    String city;
-    public getWeather(String c) {
-        city = c;
-    }
-    @Override
-    public City call() throws Exception {
-        TimeUnit.SECONDS.sleep(2);
-        City city1 = new City();
-        Bundle bundle = new Bundle();
-        bundle.putString(City.CITY, city);
-        city1.setArguments(bundle);
-        return city1;
-    }
-}*/
+
 
 public class getWeather extends AsyncTask<String, Void, String> {
     FragmentActivity activity;
