@@ -57,7 +57,7 @@ public class getWeather extends AsyncTask<String, Void, String> {
                 int code = connection.getResponseCode();
                 if (code == 200) {
                     InputStream in = connection.getInputStream();
-                    answer = handleInputStream(in);
+                    answer = (new JsonReqParser(handleInputStream(in))).info();
                 }
                 connection.disconnect();
             } catch (MalformedURLException e) {
