@@ -5,9 +5,18 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ListView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -35,12 +44,39 @@ public class getWeather extends AsyncTask<String, Void, String> {
     }
     @Override
     protected String doInBackground(String... strings) {
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        String city = strings[0];
+        Pair<String, String> coordinates = CityList.mCities.get(city);
+        String answer = null;
+        if (coordinates != null){
+            try {
+                URL url = new URL("https://simple-weather.p.mashape.com/weatherdata?lat="+coordinates.second + "&lng=" + coordinates.first);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("X-Mashape-Key", "4eDVJxGKn0mshsfKjopUw8qIneivp1OrtWCjsnITSKq0M5yGFJ");
+                connection.connect();
+                int code = connection.getResponseCode();
+                if (code == 200) {
+                    InputStream in = connection.getInputStream();
+                    answer = handleInputStream(in);
+                }
+                connection.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
         }
-        return strings[0];
+
+        return answer;
+    }
+    private String handleInputStream(InputStream in) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String result = "", line = "";
+        while ((line = reader.readLine()) != null) {
+            result += line;
+        }
+        return result;
     }
 
     @Override
