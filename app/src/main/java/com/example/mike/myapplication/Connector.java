@@ -24,13 +24,13 @@ public class Connector {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             for(Map.Entry<String, String> entry:headers.entrySet()) {
-                connection.setRequestProperty(entry.getKey(), entry.getValue());//"X-Mashape-Key", "4eDVJxGKn0mshsfKjopUw8qIneivp1OrtWCjsnITSKq0M5yGFJ");
+                connection.setRequestProperty(entry.getKey(), entry.getValue());
             }
             connection.connect();
             int code = connection.getResponseCode();
             if (code == 200) {
                 InputStream in = connection.getInputStream();
-                answer = handleInputStream(in);//(new JsonReqParser(handleInputStream(in))).info();
+                answer = handleInputStream(in);
             }
         }
         catch (Exception e){

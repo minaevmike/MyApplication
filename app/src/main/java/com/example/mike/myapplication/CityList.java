@@ -23,21 +23,8 @@ public class CityList extends Fragment {
     String[] cities = new String[] {"Москва", "Казань", "Санкт-Петербург", "Грозный","Дагестан","Мурманск"};
     private OnItemSelectedListener mCallback;
 
-    public static Map<String, Pair<String, String>> mCities = new TreeMap<String, Pair<String, String>>();
-
-    public void initializeCities() {
-        mCities.put("Москва", new Pair<String, String>("37.617671", "55.755768"));
-        mCities.put("Казань", new Pair<String, String>("49.106585", "55.795793"));
-        mCities.put("Санкт-Петербург", new Pair<String, String>("30.315868", "59.939095"));
-        mCities.put("Нижний Новгород", new Pair<String, String>("44.005986", "56.326887"));
-        mCities.put("Грозный", new Pair<String, String>("45.698197", "43.317992"));
-        mCities.put("Дагестан", new Pair<String, String>("46.996864", "43.11083"));
-        mCities.put("Мурманск", new Pair<String, String>("33.07454", "68.969563"));
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        initializeCities();
         return inflater.inflate(R.layout.cities_list, null);
 
     }

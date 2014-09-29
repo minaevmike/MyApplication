@@ -14,10 +14,7 @@ import android.widget.TextView;
  */
 public class City extends Fragment {
     public static String CITY = "city_name";
-    @Deprecated
-    public static City getInstance(String city) {
-        return null;
-    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.city, null);
@@ -30,9 +27,10 @@ public class City extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().beginTransaction().remove(City.this).commit();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
-        newsDetailTextview.setText("Город " + getArguments().getString(CITY));
+        newsDetailTextview.setText(getArguments().getString(CITY));
     }
 
 }

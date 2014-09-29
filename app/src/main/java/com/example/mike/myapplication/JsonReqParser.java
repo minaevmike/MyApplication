@@ -27,10 +27,13 @@ public class JsonReqParser {
             JSONObject condition = result.getJSONObject("item").getJSONObject("condition");
 
             StringBuilder b = new StringBuilder();
-            b.append("City: ").append(location.getString("city")).append("\n")
-                    .append("Temperature: ").append(condition.getString("temp")).append(units.getString("temperature")).append("\n")
-                    .append(condition.getString("text")).append("\n");
-
+            String[] text = {location.getString("city"),condition.getString("text")};
+            String[] trans = Translater.Translate(text, "en", "ru");
+            if(trans != null) {
+                b.append("City: ").append(trans[0]).append("\n")
+                        .append("Temperature: ").append(condition.getString("temp")).append(units.getString("temperature")).append("\n")
+                        .append(trans[1]).append("\n");
+            }
             return b.toString();
         } catch (JSONException e) {
             e.printStackTrace();
