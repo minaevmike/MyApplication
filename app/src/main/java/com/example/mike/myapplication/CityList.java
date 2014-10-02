@@ -25,7 +25,6 @@ public class CityList extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("CityList", "On CreateView");
         return inflater.inflate(R.layout.cities_list, null);
 
     }
@@ -47,8 +46,6 @@ public class CityList extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setRetainInstance(true);
-        Log.d("CityList", "On View Created");
         ListView list = (ListView) view.findViewById(R.id.list);
         list.setAdapter(new NewsListAdapter(cities));
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

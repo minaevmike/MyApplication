@@ -2,55 +2,28 @@ package com.example.mike.myapplication;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
-import java.util.Objects;
-
 
 public class MyActivity extends FragmentActivity implements CityList.OnItemSelectedListener {
     public static final String LOG_TAG = "WEATHER: ";
-    static GetWeather weather = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(LOG_TAG, "onCreate");
         setContentView(R.layout.activity_my);
-
-        /*if (getLastCustomNonConfigurationInstance() != null) {
-            weather = (GetWeather) getLastCustomNonConfigurationInstance();
-            if (weather != null) {
-                weather.activity = this;
-                if (!(weather.getStatus().equals(AsyncTask.Status.FINISHED))) {
-                    weather.showDialog();
-                }
-            }
-        }*/
-        /*LastConfig lastConfig = (LastConfig) this.getLastCustomNonConfigurationInstance();
-        if (lastConfig != null){
-
-        }*/
         if (savedInstanceState == null) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.container, new CityList());
+            fragmentTransaction.add(R.id.container,new CityList());
             fragmentTransaction.commit();
-        }
-        //weather = (GetWeather) getLastCustomNonConfigurationInstance();
-        if (weather != null){
-            Log.d("E", "NOT NULL");
-            weather.activity = this;
-            if(!weather.getStatus().equals(AsyncTask.Status.FINISHED)) {
-                weather.showDialog();
-            }
         }
     }
 
     @Override
     public void onArticleSelected(String city) {
-        weather = new GetWeather(this);
+        GetWeather weather = new GetWeather(this);
         weather.execute(city);
 
     }

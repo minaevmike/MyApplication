@@ -2,7 +2,6 @@ package com.example.mike.myapplication;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,28 +38,22 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
     public GetWeather(FragmentActivity a){
         activity = a;
     }
-    ProgressDialog progressDialog;
+    static ProgressDialog progressDialog;
     int orientation;
-    volatile int isRunning = 0;
     ListView list;
-    public void showDialog() {
+    @Override
+    protected void onPreExecute() {
+        orientation = activity.getRequestedOrientation();
+        Log.i("Orintation", Integer.toString(orientation));
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         list = (ListView) activity.findViewById(R.id.list);
-        if(list != null) {
-            list.setVisibility(View.INVISIBLE);
-        }
+        list.setVisibility(View.INVISIBLE);
         progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage("Getting weather");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.show();
-    }
-    @Override
-    protected void onPreExecute() {
-        orientation = activity.getRequestedOrientation();
-        Log.i("Orintation", Integer.toString(orientation));
-        //activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-        showDialog();
     }
 
     protected String getLongLatByName(String name) {
@@ -107,13 +100,9 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
 
     @Override
     protected void onPostExecute(WeatherInfo result){
-        Log.d("", "On post exec");
-        if(progressDialog == null){
-            Log.d("", "NULL");
-        }
         progressDialog.dismiss();
         activity.setRequestedOrientation(orientation);
-//        list.setVisibility(View.VISIBLE);
+        list.setVisibility(View.VISIBLE);
         City city1 = new City();
         Bundle bundle = new Bundle();
         bundle.putSerializable(WeatherInfo.WEATHER_INFO_TAG, result);   // Serializable is slow!!!
