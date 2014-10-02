@@ -19,7 +19,7 @@ public class WeatherInfo implements Serializable {
 /* A ANDREY PRIVATE VERNUT'
 
  */
-    public class ForecastInfo {
+    public class ForecastInfo implements Serializable{
         public String day,
                       date,
                       low,
