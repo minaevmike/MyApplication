@@ -1,5 +1,6 @@
 package com.example.mike.myapplication;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -100,9 +101,15 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
         Bundle bundle = new Bundle();
         bundle.putSerializable(WeatherInfo.WEATHER_INFO_TAG, result);   // Serializable is slow!!!
         city1.setArguments(bundle);
-        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.container, city1);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        if (result != null) {
+            FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.container, city1);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else {
+            AlertDialog dialog = Util.createAlertDialog(activity, "Internet", "No internet connection!!!!");
+            dialog.show();
+        }
     }
 }
