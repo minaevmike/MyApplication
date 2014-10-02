@@ -15,7 +15,6 @@ public class JsonReqParser {
     public JsonReqParser(String data) {
         try {
             reader = new JSONObject(data);
-            Log.d("________:", data);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -41,11 +40,9 @@ public class JsonReqParser {
             JSONArray forecast = result.getJSONObject("item").getJSONArray("forecast");
             b.append("На ближайшие дни:\n");
 
-
-
             for(int i = 0; i < forecast.length(); i++) {
                 JSONObject c = (JSONObject) forecast.get(i);
-                b.append(c.getString("date")).append(", ").append(c.getString("day"))
+                b.append(c.getString("day")).append(", ").append(c.getString("date"))
                         .append(": от ").append(c.getString("low"))
                         .append(" до ").append(c.getString("high")).append(", ")
                         .append(c.getString("text")).append("\n");

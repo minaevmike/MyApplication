@@ -43,7 +43,7 @@ public class getWeather extends AsyncTask<String, Void, String> {
         list = (ListView) activity.findViewById(R.id.list);
         list.setVisibility(View.INVISIBLE);
         progressDialog = new ProgressDialog(activity);
-        progressDialog.setMessage("Getting whether");
+        progressDialog.setMessage("Getting weather");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
