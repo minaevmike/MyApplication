@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Mike on 29.09.2014.
@@ -33,8 +35,11 @@ public class City extends Fragment {
         // work to be done here...
         WeatherInfo wi = (WeatherInfo) getArguments().getSerializable(WeatherInfo.WEATHER_INFO_TAG);
         StringBuilder b = new StringBuilder();
-        b.append(wi.getCity());
-
+        b.append(wi.getCity()).append("\n").append(wi.getText()).append("\n");
+        ArrayList<WeatherInfo.ForecastInfo> infoArrayList = wi.getForecast();
+        for(int i = 0; i < infoArrayList.size(); i++){
+            b.append(infoArrayList.get(i).returnStringForecast());
+        }
         newsDetailTextView.setText(b);
     }
 

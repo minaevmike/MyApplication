@@ -16,8 +16,10 @@ public class WeatherInfo implements Serializable {
                    units;
 
     private ArrayList<ForecastInfo> forecast = new ArrayList<ForecastInfo>();
+/* A ANDREY PRIVATE VERNUT'
 
-    private class ForecastInfo {
+ */
+    public class ForecastInfo {
         public String day,
                       date,
                       low,
@@ -30,6 +32,9 @@ public class WeatherInfo implements Serializable {
             this.low = low;
             this.high = high;
             this.text = text;
+        }
+        public String returnStringForecast(){
+            return day + "\n" + date + "\n" + low + "\n" + high + "\n" + text + "\n";
         }
     }
 

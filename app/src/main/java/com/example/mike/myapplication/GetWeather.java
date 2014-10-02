@@ -2,6 +2,7 @@ package com.example.mike.myapplication;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -37,10 +38,14 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
     public GetWeather(FragmentActivity a){
         activity = a;
     }
-    ProgressDialog progressDialog;
+    static ProgressDialog progressDialog;
+    int orientation;
     ListView list;
     @Override
     protected void onPreExecute() {
+        orientation = activity.getRequestedOrientation();
+        Log.i("Orintation", Integer.toString(orientation));
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         list = (ListView) activity.findViewById(R.id.list);
         list.setVisibility(View.INVISIBLE);
         progressDialog = new ProgressDialog(activity);
@@ -96,6 +101,7 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
     @Override
     protected void onPostExecute(WeatherInfo result){
         progressDialog.dismiss();
+        activity.setRequestedOrientation(orientation);
         list.setVisibility(View.VISIBLE);
         City city1 = new City();
         Bundle bundle = new Bundle();
