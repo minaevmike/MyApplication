@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by Andrey on 29.09.2014.
  */
@@ -20,7 +22,8 @@ public class JsonReqParser {
         }
     }
 
-    public String info() {
+    public WeatherInfo info() {
+        WeatherInfo wi = new WeatherInfo();
         try {
             JSONObject result  =  reader.getJSONObject("query")
                                         .getJSONObject("results")
@@ -30,25 +33,26 @@ public class JsonReqParser {
             JSONObject condition = result.getJSONObject("item").getJSONObject("condition");
 
             StringBuilder b = new StringBuilder();
+            wi.setCity(location.getString("city"));  // if translation fails we need default values
+            wi.setText(condition.getString("text"));
+            wi.setTemp(condition.getString("temp"));
+            wi.setUnits(units.getString("temperature"));
+
             String[] text = {location.getString("city"),condition.getString("text")};
             String[] trans = Translater.Translate(text, "en", "ru");
             if(trans != null) {
-                b.append("City: ").append(trans[0]).append("\n")
-                        .append("Temperature: ").append(condition.getString("temp")).append(units.getString("temperature")).append("\n")
-                        .append(trans[1]).append("\n");
+                wi.setCity(trans[0]);
+                wi.setText(trans[1]);
             }
+
             JSONArray forecast = result.getJSONObject("item").getJSONArray("forecast");
-            b.append("На ближайшие дни:\n");
 
             for(int i = 0; i < forecast.length(); i++) {
                 JSONObject c = (JSONObject) forecast.get(i);
-                b.append(c.getString("day")).append(", ").append(c.getString("date"))
-                        .append(": от ").append(c.getString("low"))
-                        .append(" до ").append(c.getString("high")).append(", ")
-                        .append(c.getString("text")).append("\n");
+                wi.addForecast(c.getString("day"), c.getString("date"), c.getString("low"),
+                        c.getString("high"), c.getString("text"));
             }
-
-            return b.toString();
+            return wi;
         } catch (JSONException e) {
             e.printStackTrace();
         }

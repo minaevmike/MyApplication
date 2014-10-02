@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 
-public class GetWeather extends AsyncTask<String, Void, String> {
+public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
     FragmentActivity activity;
     public GetWeather(FragmentActivity a){
         activity = a;
@@ -75,12 +75,12 @@ public class GetWeather extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected String doInBackground(String... strings) {
+    protected WeatherInfo doInBackground(String... strings) {
         String city = strings[0];
         //getLongLatByName(city);
         //Pair<String, String> coordinates = CityList.mCities.get(city);
         String coordinates = getLongLatByName(city);
-        String answer = null;
+        WeatherInfo answer = null;
         if (coordinates != null) {
             String[] coords = coordinates.split(" ");
             String url = "https://simple-weather.p.mashape.com/weatherdata?lat="+ coords[1] + "&lng=" + coords[0];
@@ -93,12 +93,12 @@ public class GetWeather extends AsyncTask<String, Void, String> {
 
 
     @Override
-    protected void onPostExecute(String result){
+    protected void onPostExecute(WeatherInfo result){
         progressDialog.dismiss();
         list.setVisibility(View.VISIBLE);
         City city1 = new City();
         Bundle bundle = new Bundle();
-        bundle.putString(City.CITY, result);
+        bundle.putString(City.CITY, "City hrdcode");
         city1.setArguments(bundle);
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container, city1);

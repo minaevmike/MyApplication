@@ -21,7 +21,7 @@ public class MyActivity extends FragmentActivity implements CityList.OnItemSelec
 
     @Override
     public void onArticleSelected(String city) {
-        getWeather weather = new getWeather(this);
+        GetWeather weather = new GetWeather(this);
         weather.execute(city);
 
     }

@@ -11,7 +11,7 @@ public class WeatherInfo {
                    text,
                    units;
 
-    private ArrayList<ForecastInfo> forecast;
+    private ArrayList<ForecastInfo> forecast = new ArrayList<ForecastInfo>();
 
     private class ForecastInfo {
         public String day,
