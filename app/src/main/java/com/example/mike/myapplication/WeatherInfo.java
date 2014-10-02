@@ -19,6 +19,14 @@ public class WeatherInfo {
                       low,
                       high,
                       text;
+
+        private ForecastInfo(String day, String date, String low, String high, String text) {
+            this.day = day;
+            this.date = date;
+            this.low = low;
+            this.high = high;
+            this.text = text;
+        }
     }
 
     public String getCity() {
@@ -57,7 +65,7 @@ public class WeatherInfo {
         this.units = units;
     }
 
-    public void setForecast(ArrayList<ForecastInfo> forecast) {
-        this.forecast = forecast;
+    public void addForecast(String day, String date, String low, String high, String text) {
+        forecast.add(new ForecastInfo(day, date, low, high, text));
     }
 }
