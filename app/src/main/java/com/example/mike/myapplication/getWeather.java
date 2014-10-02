@@ -31,9 +31,9 @@ import java.util.concurrent.TimeUnit;
  */
 
 
-public class getWeather extends AsyncTask<String, Void, String> {
+public class GetWeather extends AsyncTask<String, Void, String> {
     FragmentActivity activity;
-    public getWeather(FragmentActivity a){
+    public GetWeather(FragmentActivity a){
         activity = a;
     }
     ProgressDialog progressDialog;
