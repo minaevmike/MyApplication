@@ -21,7 +21,7 @@ public class City extends Fragment {
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        TextView newsDetailTextview = (TextView) view.findViewById(R.id.city_textview);
+        TextView newsDetailTextView = (TextView) view.findViewById(R.id.city_textview);
         Button understoodButton = (Button) view.findViewById(R.id.understood);
         understoodButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,11 +30,12 @@ public class City extends Fragment {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
+        // work to be done here...
         WeatherInfo wi = (WeatherInfo) getArguments().getSerializable(WeatherInfo.WEATHER_INFO_TAG);
         StringBuilder b = new StringBuilder();
         b.append(wi.getCity());
 
-        newsDetailTextview.setText(b);
+        newsDetailTextView.setText(b);
     }
 
 }
