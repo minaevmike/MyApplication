@@ -1,15 +1,13 @@
 package com.example.mike.myapplication;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 
 /**
- * Created by Andrey on 29.09.2014.
+ * Created by Andrey
+ * 29.09.2014.
  */
 public class JsonReqParser {
     private JSONObject reader;
@@ -32,7 +30,6 @@ public class JsonReqParser {
             JSONObject units     = result.getJSONObject("units");
             JSONObject condition = result.getJSONObject("item").getJSONObject("condition");
 
-            StringBuilder b = new StringBuilder();
             wi.setCity(location.getString("city"));  // if translation fails we need default values
             wi.setText(condition.getString("text"));
             wi.setTemp(condition.getString("temp"));
