@@ -98,7 +98,7 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
         list.setVisibility(View.VISIBLE);
         City city1 = new City();
         Bundle bundle = new Bundle();
-        bundle.putString(City.CITY, "City hrdcode");
+        bundle.putSerializable(WeatherInfo.WEATHER_INFO_TAG, result);   // Serializable is slow!!!
         city1.setArguments(bundle);
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container, city1);

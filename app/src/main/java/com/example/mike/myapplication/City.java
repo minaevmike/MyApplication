@@ -30,7 +30,11 @@ public class City extends Fragment {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
-        newsDetailTextview.setText(getArguments().getString(CITY));
+        WeatherInfo wi = (WeatherInfo) getArguments().getSerializable(WeatherInfo.WEATHER_INFO_TAG);
+        StringBuilder b = new StringBuilder();
+        b.append(wi.getCity());
+
+        newsDetailTextview.setText(b);
     }
 
 }

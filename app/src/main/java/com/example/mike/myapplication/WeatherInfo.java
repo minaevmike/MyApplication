@@ -1,11 +1,14 @@
 package com.example.mike.myapplication;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Andrey on 02.10.2014.
  */
-public class WeatherInfo {
+public class WeatherInfo implements Serializable {
+    public static String WEATHER_INFO_TAG = "WEATHER_INFO_TAG";
+
     private String city,
                    temp,
                    text,
