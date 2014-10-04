@@ -71,7 +71,12 @@ public class MyActivity extends FragmentActivity implements CityList.OnItemSelec
 
     @Override
     public void onBackPressed() {
-        new AppQuitDialogFragment().show(getSupportFragmentManager(), AppQuitDialogFragment.TAG);
+        if(getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            new AppQuitDialogFragment().show(getSupportFragmentManager(), AppQuitDialogFragment.TAG);
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 
     @Override
