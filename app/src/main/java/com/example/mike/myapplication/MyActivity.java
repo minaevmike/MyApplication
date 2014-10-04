@@ -19,19 +19,6 @@ public class MyActivity extends FragmentActivity implements CityList.OnItemSelec
         Log.d(LOG_TAG, "onCreate");
         setContentView(R.layout.activity_my);
 
-        /*if (getLastCustomNonConfigurationInstance() != null) {
-            weather = (GetWeather) getLastCustomNonConfigurationInstance();
-            if (weather != null) {
-                weather.activity = this;
-                if (!(weather.getStatus().equals(AsyncTask.Status.FINISHED))) {
-                    weather.showDialog();
-                }
-            }
-        }*/
-        /*LastConfig lastConfig = (LastConfig) this.getLastCustomNonConfigurationInstance();
-        if (lastConfig != null){
-
-        }*/
         if (savedInstanceState == null) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.container, new CityList());

@@ -2,8 +2,6 @@ package com.example.mike.myapplication;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -16,18 +14,10 @@ import android.widget.ListView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Mike on 29.09.2014.
@@ -113,7 +103,9 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
         }
         progressDialog.dismiss();
         activity.setRequestedOrientation(orientation);
-//        list.setVisibility(View.VISIBLE);
+        if(list != null) {
+            list.setVisibility(View.VISIBLE);
+        }
         City city1 = new City();
         Bundle bundle = new Bundle();
         bundle.putSerializable(WeatherInfo.WEATHER_INFO_TAG, result);   // Serializable is slow!!!
