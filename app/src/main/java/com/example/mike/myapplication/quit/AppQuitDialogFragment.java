@@ -28,9 +28,9 @@ public class AppQuitDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new AlertDialog.Builder(getActivity())
-                .setTitle("Вы действительо хотите выйти?")
+                .setTitle(R.string.quit_dialog_title)
                 .setIcon(R.drawable.exit)
-                .setMessage("Вы не сможете больше получать сверхактуальную информацию")
+                .setMessage(R.string.quit_dialog_message)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     @Override
