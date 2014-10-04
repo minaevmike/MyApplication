@@ -1,17 +1,16 @@
 package com.example.mike.myapplication;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
-import java.util.Objects;
+import com.example.mike.myapplication.quit.AppQuitDialogFragment;
+import com.example.mike.myapplication.quit.YesNoQuitListener;
 
 
-public class MyActivity extends FragmentActivity implements CityList.OnItemSelectedListener {
+public class MyActivity extends FragmentActivity implements CityList.OnItemSelectedListener, YesNoQuitListener {
     public static final String LOG_TAG = "WEATHER: ";
     static GetWeather weather = null;
     @Override
@@ -85,31 +84,20 @@ public class MyActivity extends FragmentActivity implements CityList.OnItemSelec
 
     @Override
     public void onBackPressed() {
-        openQuitDialog();
+        new AppQuitDialogFragment().show(getSupportFragmentManager(), AppQuitDialogFragment.TAG);
     }
 
-    private void openQuitDialog() {
-        AlertDialog.Builder quitDialog = new AlertDialog.Builder(
-                this);
-        quitDialog.setTitle("Вы дйствитльо хотите выйти?");
-        quitDialog.setIcon(R.drawable.exit);
-        quitDialog.setMessage("Вы не сможете больше получать сверхатуальную информацию");
-
-        quitDialog.setPositiveButton("Да", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-
-        quitDialog.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                /*Nothing*/
-            }
-        });
-
-        quitDialog.show();
+    @Override
+    public void onQuitYes() {
+        finish();
     }
+
+    @Override
+    public void onQuitNo() {
+        /*Nothing*/
+    }
+
+
+
 
 }
