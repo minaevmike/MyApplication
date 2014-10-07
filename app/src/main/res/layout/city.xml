@@ -13,10 +13,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/city_textview"
+            <TableLayout
+                android:id="@+id/table_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"></TableLayout>
+            <TableRow
+                android:id="@+id/weather_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"></TableRow>
 
             <Button
                 android:id="@+id/understood"

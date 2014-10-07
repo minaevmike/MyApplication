@@ -31,7 +31,6 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
     }
     ProgressDialog progressDialog;
     int orientation;
-    volatile int isRunning = 0;
     ListView list;
     public void showDialog() {
         list = (ListView) activity.findViewById(R.id.list);
@@ -45,10 +44,10 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
+
     @Override
     protected void onPreExecute() {
         orientation = activity.getRequestedOrientation();
-        Log.i("Orintation", Integer.toString(orientation));
         //activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         showDialog();
     }
@@ -89,7 +88,7 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
             String url = "https://simple-weather.p.mashape.com/weatherdata?lat="+ coords[1] + "&lng=" + coords[0];
             Map<String, String> headers = new TreeMap<String, String>();
             headers.put("X-Mashape-Key", "4eDVJxGKn0mshsfKjopUw8qIneivp1OrtWCjsnITSKq0M5yGFJ");
-            answer = (new JsonReqParser(Connector.getByUrl(url, headers))).info();
+            answer = (new JsonReqParser(Connector.getByUrl(url, headers))).info(city);
         }
         return answer;
     }

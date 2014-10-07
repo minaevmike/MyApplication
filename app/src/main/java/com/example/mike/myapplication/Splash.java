@@ -1,9 +1,14 @@
 package com.example.mike.myapplication;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.TreeMap;
 
 /**
  * Created by Mike on 28.09.2014.
@@ -14,13 +19,7 @@ public class Splash extends Activity {
     public void onCreate(Bundle bundle){
         super.onCreate(bundle);
         setContentView(R.layout.splash);
-        new Handler().postDelayed(new Runnable(){
-           @Override
-        public void run() {
-               Intent intent = new Intent(Splash.this, MyActivity.class);
-               Splash.this.startActivity(intent);
-               Splash.this.finish();
-           }
-        },SPLASH_DELAY);
+        GetCities cities = new GetCities(Splash.this);
+        cities.execute();
     }
 }

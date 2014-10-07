@@ -20,7 +20,9 @@ import java.util.TreeMap;
  * Created by Mike on 28.09.2014.
  */
 public class CityList extends Fragment {
-    String[] cities = new String[] {"Москва", "Казань", "Санкт-Петербург", "Грозный","Дагестан","Мурманск"};
+    static String[] cities = new String[] {"Moscow", "Kazan", "London", "New-York", "Boston", "Minsk",
+    "Washington", "Kiev", "Tokyo", "Amsterdam", "Berlin", "Milan", "Odessa", "Saints-Petersburg","Madrid",
+    "Barcelona"};
     private OnItemSelectedListener mCallback;
 
     @Override

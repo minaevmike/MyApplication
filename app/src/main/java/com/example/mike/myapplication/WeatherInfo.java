@@ -15,6 +15,25 @@ public class WeatherInfo implements Serializable {
                    text,
                    units;
 
+    public String getFore() {
+        return fore;
+    }
+
+    public void setFore(String fore) {
+        this.fore = fore;
+    }
+
+    public String getWeatherWord() {
+        return weatherWord;
+    }
+
+    public void setWeatherWord(String weatherWord) {
+        this.weatherWord = weatherWord;
+    }
+
+    private String weatherWord;
+    private String fore;
+
     private ArrayList<ForecastInfo> forecast = new ArrayList<ForecastInfo>();
 /* A ANDREY PRIVATE VERNUT'
 
@@ -34,7 +53,9 @@ public class WeatherInfo implements Serializable {
             this.text = text;
         }
         public String returnStringForecast(){
-            return day + "\n" + date + "\n" + low + "\n" + high + "\n" + text + "\n";
+            StringBuilder builder = new StringBuilder();
+            builder.append(date).append(", ").append(day).append(" :").append(low).append("...").append(high).append('\n').append(text).append("\n\n");
+            return builder.toString();
         }
     }
 
