@@ -1,5 +1,9 @@
 package com.example.mike.myapplication;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -40,8 +44,9 @@ public class City extends Fragment {
         // work to be done here...
         WeatherInfo wi = (WeatherInfo) getArguments().getSerializable(WeatherInfo.WEATHER_INFO_TAG);
         StringBuilder b = new StringBuilder();
-        b.append(wi.getWeatherWord()).append(wi.getCity()).append(": ").append(wi.getTemp()).append(wi.getUnits()).append(", ").
-                append(wi.getText()).append("\n\n\n\n").append(wi.getFore()).append("\n\n");
+        b.append(wi.getWeatherWord()).append(" ").append(wi.getCity()).append(":\n").append(wi.getTemp()).append(wi.tUnits).append(", ").
+                append(wi.getText()).append("\n").append(wi.windWord).append(wi.getWindInfo().speed).append(' ').append(wi.sUnits).append('\n').append(wi.noWindWeather).append(' ').
+        append(wi.tUnits).append("\n\n\n\n").append(wi.getFore()).append("\n\n");
         TableRow tempTableRow = new TableRow(getActivity());
         TextView textView = new TextView(getActivity());
         textView.setText(b.toString());
@@ -52,7 +57,8 @@ public class City extends Fragment {
         tableLayout.addView(tempTableRow);
 
         ArrayList<WeatherInfo.ForecastInfo> infoArrayList = wi.getForecast();
-        for(int i = 0; i < infoArrayList.size(); i++){
+        /*From 1 becuase yahoo returns 0 today day*/
+        for(int i = 1; i < infoArrayList.size(); i++){
             TableRow tempTableRow1 = new TableRow(getActivity());
             TextView textView1 = new TextView(getActivity());
             textView1.setText(infoArrayList.get(i).returnStringForecast());

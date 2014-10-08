@@ -29,7 +29,6 @@ public class GetCities extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
 
         ArrayList<String> cits = new ArrayList<String>();
-        ArrayList<String> trans = new ArrayList<String>();
         for(int i = 0; i < CityList.cities.length; i++){
             cits.add(CityList.cities[i]);
         }

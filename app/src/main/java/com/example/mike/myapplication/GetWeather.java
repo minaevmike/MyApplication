@@ -48,7 +48,6 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
     @Override
     protected void onPreExecute() {
         orientation = activity.getRequestedOrientation();
-        //activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         showDialog();
     }
 
@@ -56,7 +55,6 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
         String json = null;
         String coords = null;
         try {
-            //Log.d("URL","http://geocode-maps.yandex.ru/1.x/?geocode=" + URLEncoder.encode(name, "utf-8") + "&format=json");
             json = Connector.getByUrl("http://geocode-maps.yandex.ru/1.x/?geocode=" + URLEncoder.encode(name, "utf-8") + "&format=json");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -68,7 +66,6 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
                 JSONObject latlong = ((JSONObject)object.getJSONObject("response").getJSONObject("GeoObjectCollection").
                         getJSONArray("featureMember").get(0)).getJSONObject("GeoObject").getJSONObject("Point");
                 coords = latlong.getString("pos");
-                //Log.d("POSITION", latlong.getString("pos"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -79,8 +76,6 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
     @Override
     protected WeatherInfo doInBackground(String... strings) {
         String city = strings[0];
-        //getLongLatByName(city);
-        //Pair<String, String> coordinates = CityList.mCities.get(city);
         String coordinates = getLongLatByName(city);
         WeatherInfo answer = null;
         if (coordinates != null) {

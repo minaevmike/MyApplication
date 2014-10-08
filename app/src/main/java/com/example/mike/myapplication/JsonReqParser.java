@@ -1,5 +1,7 @@
 package com.example.mike.myapplication;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,16 +32,35 @@ public class JsonReqParser {
             JSONObject result  =  reader.getJSONObject("query")
                                         .getJSONObject("results")
                                         .getJSONObject("channel");
+            Log.v("", result.toString());
             JSONObject location  = result.getJSONObject("location");
             JSONObject units     = result.getJSONObject("units");
             JSONObject condition = result.getJSONObject("item").getJSONObject("condition");
+            JSONObject wind = result.getJSONObject("wind");
+            Double dir = Double.parseDouble(wind.getString("direction"));
+            if(dir >= 45 && dir < 135){
+                wi.windWord = "North ";
+            } else if (dir >= 135 && dir < 225){
+                wi.windWord = "West ";
+            } else if (dir >=225 && dir < 315) {
+                wi.windWord = "South ";
+            } else {
+                wi.windWord = "East ";
+            }
 
+            wi.noWindWeather = "Temperature if there is no wind :" + wind.getString("chill");
+            wi.addWindInfo(wind.getString("speed"), wind.getString("direction"));
             wi.setCity(city);  // if translation fails we need default values
             wi.setText(condition.getString("text"));
             wi.setTemp(condition.getString("temp"));
-            wi.setUnits(units.getString("temperature"));
-            String weather = "Weather";
+
+            wi.tUnits = (units.getString("temperature"));
+            wi.pUnits = units.getString("pressure");
+            wi.dUnits = units.getString("distance");
+            wi.sUnits = units.getString("speed");
+            String weather = "Weather for today at";
             String fore = "Weather forecast for next few days:";
+            wi.windWord += " wind: ";
             //String[] text = {location.getString("city"),condition.getString("text")};
             ArrayList<String> text = new ArrayList<String>();
             text.add(condition.getString("text"));
@@ -52,6 +73,10 @@ public class JsonReqParser {
                 text.add(c.getString("date"));
                 text.add(c.getString("text"));
             }
+            text.add(wi.dUnits);
+            text.add(wi.sUnits);
+            text.add(wi.windWord);
+            text.add(wi.noWindWeather);
             text.add(fore);
             text.add(weather);
             TreeMap<String, String> trans = Translater.Translate(text, "en", Locale.getDefault().getLanguage());
@@ -64,6 +89,10 @@ public class JsonReqParser {
                 }
                 wi.setFore(trans.get(fore));
                 wi.setWeatherWord(trans.get(weather));
+                wi.dUnits = trans.get(wi.dUnits);
+                wi.sUnits = trans.get(wi.sUnits);
+                wi.windWord = trans.get(wi.windWord);
+                wi.noWindWeather = trans.get(wi.noWindWeather);
             }
 
             return wi;
