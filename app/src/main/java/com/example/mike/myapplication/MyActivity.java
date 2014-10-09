@@ -103,6 +103,7 @@ public class MyActivity extends FragmentActivity implements CityList.OnItemSelec
     @Override
     public void onQuitYes() {
         finish();
+        System.exit(0);
     }
 
     @Override
