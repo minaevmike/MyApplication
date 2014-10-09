@@ -28,6 +28,7 @@ import com.example.mike.myapplication.PictureFragment;
 
 public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
     FragmentActivity activity;
+    static String Getting = "Getting weather";
     public GetWeather(FragmentActivity a){
         activity = a;
     }
@@ -45,7 +46,7 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
             picture.setVisibility(View.INVISIBLE);
         }*/
         progressDialog = new ProgressDialog(activity);
-        progressDialog.setMessage("Getting weather");
+        progressDialog.setMessage(Getting);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);

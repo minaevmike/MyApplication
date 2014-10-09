@@ -16,7 +16,8 @@ import com.example.mike.myapplication.quit.YesNoQuitListener;
  */
 public class AppQuitDialogFragment extends DialogFragment {
     public static String TAG = "AppQuitDialogFragment";
-
+    public static String Title = "Are you sure that you want to exit??";
+    public static String Message = "From now you can't get very important information about weather";
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -28,9 +29,9 @@ public class AppQuitDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.quit_dialog_title)
+                .setTitle(Title)
                 .setIcon(R.drawable.exit)
-                .setMessage(R.string.quit_dialog_message)
+                .setMessage(Message)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     @Override

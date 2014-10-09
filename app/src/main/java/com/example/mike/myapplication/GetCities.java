@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import com.example.mike.myapplication.quit.AppQuitDialogFragment;
+
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.TreeMap;
@@ -29,6 +31,9 @@ public class GetCities extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
 
         ArrayList<String> cits = new ArrayList<String>();
+        cits.add(AppQuitDialogFragment.Message);
+        cits.add(AppQuitDialogFragment.Title);
+        cits.add(GetWeather.Getting);
         for(int i = 0; i < CityList.cities.length; i++){
             cits.add(CityList.cities[i]);
         }
@@ -36,6 +41,9 @@ public class GetCities extends AsyncTask<Void, Void, Void> {
         for(int i = 0; i < CityList.cities.length; i++){
             CityList.cities[i] = map.get(CityList.cities[i]);
         }
+        AppQuitDialogFragment.Message = map.get(AppQuitDialogFragment.Message);
+        AppQuitDialogFragment.Title = map.get(AppQuitDialogFragment.Title);
+        GetWeather.Getting = map.get(GetWeather.Getting);
         return null;
     }
 }

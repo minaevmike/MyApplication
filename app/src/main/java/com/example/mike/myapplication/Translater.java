@@ -39,7 +39,10 @@ public class Translater {
                     trans.put(text.get(i), text.get(i));
                 }
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
+            for(int i = 0; i < text.size(); ++i) {
+                trans.put(text.get(i), text.get(i));
+            }
             e.printStackTrace();
         }
         return trans;
