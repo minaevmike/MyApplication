@@ -1,6 +1,7 @@
 package com.example.mike.myapplication;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import java.net.URLEncoder;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.example.mike.myapplication.PictureFragment;
 /**
  * Created by Mike on 29.09.2014.
  */
@@ -32,11 +34,16 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
     ProgressDialog progressDialog;
     int orientation;
     ListView list;
+    View picture;
     public void showDialog() {
         list = (ListView) activity.findViewById(R.id.list);
+        picture = activity.findViewById(R.id.picture);
         if(list != null) {
             list.setVisibility(View.INVISIBLE);
         }
+        /*if(picture != null) {
+            picture.setVisibility(View.INVISIBLE);
+        }*/
         progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage("Getting weather");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -108,6 +115,18 @@ public class GetWeather extends AsyncTask<String, Void, WeatherInfo> {
             FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
             transaction.add(R.id.container, city1);
             transaction.addToBackStack(null);
+
+            PictureFragment pictureFragment = (PictureFragment) activity.getSupportFragmentManager().findFragmentById(R.id.picture);
+            MyActivity myActivity = (MyActivity)activity;
+            myActivity.picture_discription = result.getText();
+            if(pictureFragment != null){
+                pictureFragment.SetPicture(result.getText());
+                /*PictureFragment pictureFragment = new PictureFragment();
+                Bundle pictureBundle = new Bundle();
+                pictureBundle.putString(PictureFragment.PICTURE_DISCRIPTION_TAG, result.getText());
+                pictureFragment.setArguments(pictureBundle);
+                transaction.replace(R.id.picture, pictureFragment);*/
+            }
             transaction.commit();
         }
         else {

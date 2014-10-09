@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="quit_dialog_title">Вы действительо хотите выйти?</string>
     <string name="quit_dialog_message">Вы не сможете больше получать сверхактуальную информацию</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
